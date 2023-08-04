@@ -121,3 +121,7 @@ root.render(
 ```
 
 "@babel/plugin-proposal-private-property-in-object"
+
+파일 복제시
+모듈 삭제후
+npm install 실행
