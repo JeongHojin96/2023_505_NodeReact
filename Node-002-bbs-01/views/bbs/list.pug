@@ -1,0 +1,18 @@
+extends ../layout 
+
+block content 
+    h1 bbs here
+    table 
+        tr 
+            th No. 
+            th Date 
+            th Nickname
+            th Title 
+            th Views 
+        each item in BBS 
+            tr 
+                td= item.b_seq 
+                td= item.b_date 
+                td= item.b_nickname 
+                td= item.b_title 
+                td= item.b_viewcount

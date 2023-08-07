@@ -125,3 +125,14 @@ root.render(
 파일 복제시
 모듈 삭제후
 npm install 실행
+
+## NodeJS 와 React 연동할때 port 충돌 방지
+
+- NodeJs 는 기본 3000 Port에서 실행
+- React 의 실행 Port 변경
+- Package.json 의 다음 Script 변경
+
+```json
+"start" : "react-scripts start" 를
+"start" : "set PORT=5000 && react-scripts start" 으로
+```
