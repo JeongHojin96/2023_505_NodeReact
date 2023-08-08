@@ -1,17 +1,25 @@
-// DOM HTML JS 영역
+// 지금부터 여기는 DOM HTML JS 영역이다
 document.addEventListener("DOMContentLoaded", () => {});
 
-// JQuery Script 영역
+// 지금부터 여기는 JQuery Script 영역이다
 $(document).ready(function () {});
 $(function () {});
 $(() => {
-  $("div.home").html("반갑소");
+  $("div.home").html("반갑습니다");
   $("div.bbs").css("color", "blue");
 
-  //   document.querySelector();
+  //   const divs1 =  document.querySelectorAll("div.main")
+  //   const onClickHandler = (e) =>{
+  //     const text = e.currentTarget.innerText
+  //     alert(text)
+  //   }
+  //   for(let i = 0 ; i < divs1.length ; i++) {
+  //     divs1[i].addEventListener(onClickHandler)
+  //   }
+
   const divs = $("div.main");
-  divs.on("click", function (e) {
-    const text = this.innerText;
+  divs.on("click", (e) => {
+    const text = e.target.innerText; // this.innerText;
     alert(text);
   });
 });

@@ -29,8 +29,14 @@ const app = express();
 // helmet security module
 app.use(helmet());
 
+// force : true 이면 기존 Table 을 모두 DROP 하고 다시 CREATE TABLE
+// force : false 이면 기존 Table 없을때는 CREATE TABLE
 DB.sequelize.sync({ force: false }).then((dbConn) => {
-  console.log(dbConn.options.host, dbConn.config.database, "DB Connection OK");
+  console.log(
+    dbConn.options.host,
+    dbConn.config.database,
+    "DB Connection OK"
+  );
 });
 
 // Disable the fingerprinting of this web technology.

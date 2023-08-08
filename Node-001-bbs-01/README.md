@@ -1,6 +1,6 @@
-# Node + Express + MySql BBS 프로젝트
+# Node + Express + MySQL BBS 프로젝트
 
-- 프로젝트 생성 : `npx express-21c [project name] -s`
+- 프로젝트 생성 : `npx express-21c [project] -s`
 
 ## NodeJS 에서 MySQL 서버에 접속하기 위한 Global Setting
 

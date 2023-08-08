@@ -1,4 +1,5 @@
 import Sequelize from "sequelize";
+
 export default function (sequelize) {
   return sequelize.define(
     "tbl_bbs",
@@ -33,16 +34,16 @@ export default function (sequelize) {
         type: Sequelize.DataTypes.STRING(10),
         allowNull: true,
       },
+      b_viewcount: {
+        type: Sequelize.DataTypes.TEXT,
+        allowNull: true,
+      },
       b_image: {
-        type: Sequelize.DataTypes.STRING(125),
+        type: Sequelize.DataTypes.STRING(255),
         allowNull: true,
       },
       b_origin_image: {
-        type: Sequelize.DataTypes.STRING(125),
-        allowNull: true,
-      },
-      b_viewcount: {
-        type: Sequelize.DataTypes.BIGINT,
+        type: Sequelize.DataTypes.STRING(255),
         allowNull: true,
       },
     },
