@@ -30,7 +30,7 @@ export default (sequelize) => {
         allowNull: true,
       },
       b_date: {
-        type: Sequelize.DataTypes.STRING(10),
+        type: Sequelize.DataTypes.STRING(20),
         allowNull: true,
       },
       b_viewcount: {

@@ -16,6 +16,16 @@ const BBsMain = () => {
 
   return (
     <>
+      <h2>
+        <span>댓</span>
+        <span>글</span>
+        <span>을</span>
+        <span>달</span>
+        <span>아</span>
+        <span>보</span>
+        <span>자</span>
+        <span>!</span>
+      </h2>
       <BBsInput />
       <BBsList />
     </>

@@ -33,7 +33,6 @@ export const getBbsList = async () => {
   try {
     const response = await fetch(URL.BBS_LIST);
     const bbsList = await response.json();
-    console.table(bbsList);
     return bbsList;
   } catch (error) {
     return [];

@@ -1,4 +1,4 @@
-import logo from "./logo.svg";
+import logo from "./22.jpg";
 import "./css/App.css";
 import { useState, useEffect } from "react";
 import BBsMain from "./comps/BBsMain";
@@ -19,12 +19,8 @@ function App() {
 
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          {title ? title : "반갑습니다 React BBS Project 입니다."}
-        </p>
-      </header>
+      <img src={logo} className="App-logo" alt="logo" />
+
       <BBsContextProvder>
         <BBsMain />
       </BBsContextProvder>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { filePreview, filesPreview } from "../modules/ImagePreview";
 
 import css from "../css/BBsInput.module.css";
@@ -15,14 +15,7 @@ const BBsInput = () => {
   };
 
   const thumbImages = images.map((image) => {
-    return (
-      <img
-        src={image}
-        width="50px"
-        alt=""
-        onClick={(e) => setMainImage(image)}
-      />
-    );
+    return <img src={image} onClick={(e) => setMainImage(image)} />;
   });
 
   const fileChangeHandler = async (e) => {
@@ -32,7 +25,6 @@ const BBsInput = () => {
 
   const filesChangHandler = async (e) => {
     const files = e.target.files;
-    console.log(files);
     const imgSrcList = await Promise.all(filesPreview(files));
 
     setImages(imgSrcList);
@@ -40,18 +32,21 @@ const BBsInput = () => {
 
   const inputChangHandler = (e) => {
     const { name, value } = e.target;
-    if (name === "b_date") {
-      // 현재 시간을 포맷에 맞게 가져옴
-      const formattedTime = getCurrentFormattedTime();
-      setBBs({ ...bbs, [name]: formattedTime });
-    } else {
-      setBBs({ ...bbs, [name]: value });
-    }
+    bbs.b_date = currentTime;
+    setBBs({ ...bbs, [name]: value });
   };
 
   const insertButtonClickHandler = async () => {
     if (imgRef && imgRef.current) {
       bbsInsertCB();
+      setBBs({
+        ...bbs,
+        b_nickname: "",
+        b_content: "",
+        b_image: "",
+        b_origin_image: "",
+      });
+      setMainImage();
     } else {
       console.log("Image input is not ready yet.");
     }
@@ -75,38 +70,49 @@ const BBsInput = () => {
     const minutes = padZero(now.getMinutes());
     const seconds = padZero(now.getSeconds());
 
-    return `${year}/${month}/${day} ${hours}:${minutes}:${seconds}`;
+    return `${year}.${month}.${day} ${hours}:${minutes}`;
   }
 
   function padZero(num) {
     return (num < 10 ? "0" : "") + num;
   }
 
+  const textarea = useRef();
+  const handleResizeHeight = () => {
+    textarea.current.style.height = "auto";
+    textarea.current.style.height = textarea.current.scrollHeight + "px";
+  };
+
   return (
     <section className={css.main}>
-      <h2>댓글을 달아볼까요?</h2>
       <div className={css.input_container}>
         <div>
           <input
+            className="nickname"
             name="b_nickname"
-            placeholder="닉네임"
+            placeholder="닉네임을 써보자"
             value={bbs.b_nickname}
             onChange={inputChangHandler}
           />
         </div>
 
         <div>
-          <input
+          <textarea
             name="b_content"
-            placeholder="내용"
+            placeholder="내용을 작성해보자. "
             value={bbs.b_content}
             onChange={inputChangHandler}
+            textarea
+            rows={9}
           />
         </div>
+        <div className={css.button}>
+          <button onClick={insertButtonClickHandler}>작성</button>
+        </div>
       </div>
+
       <div className={css.image_box}>
         <div>
-          <label htmlFor="main_image">이미지</label>
           <input
             id="main_image"
             type="file"
@@ -114,8 +120,9 @@ const BBsInput = () => {
             onChange={fileChangeHandler}
             ref={imgRef}
           />
+          <label htmlFor="main_image">이미지</label>
           <div className={css.thumb}>
-            <img src={image ? image : ""} width="200px" />
+            <img src={image ? image : ""} width="150px" />
           </div>
           <div>
             <input
@@ -126,13 +133,10 @@ const BBsInput = () => {
               onChange={filesChangHandler}
               ref={imgsRef}
             />
-            <div className={css.thumb}>{thumbImages}</div>
           </div>
         </div>
       </div>
-      <div className={css.button}>
-        <button onClick={insertButtonClickHandler}>작성</button>
-      </div>
+
       <div className="view"></div>
     </section>
   );

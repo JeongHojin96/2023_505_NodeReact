@@ -1,38 +1,43 @@
 import { useBBsContext } from "../provider/BBsProvider";
 import css from "../css/BBsList.module.css";
+import React, { useState } from "react";
 
 const BBsList = () => {
   const { bbsList, setBBsList } = useBBsContext();
+  const [visibleItemCount, setVisibleItemCount] = useState(5); // 처음에는 5개만 보이도록 설정
+  const loadMoreItems = () => {
+    setVisibleItemCount((prevCount) => prevCount + 5); // 예를 들어 5개씩 더 보여주도록 설정
+  };
 
   const bbsItems = bbsList.map((bbs) => {
     return (
-      <div key={bbs.b_seq} data-seq={bbs.b_seq}>
-        <div className="list_nick">{bbs.b_nickname}</div>
-        {bbs.b_image && ( // bbs.b_image 값이 존재할 때만 이미지 렌더링
-          <div>
+      <div key={bbs.b_seq} data-seq={bbs.b_seq} className={css.main}>
+        <div className={css.list_image}>
+          {bbs.b_image && (
             <img
               src={`/static/upload/${bbs.b_image}`}
-              width="200px"
               alt={bbs.b_origin_name}
             />
-          </div>
-        )}
-        <div className="list_content">{bbs.b_content}</div>
-        <div className="list_date">{bbs.b_date}</div>
+          )}
+        </div>
+
+        <div className={css.list_text}>
+          <div className={css.list_nick}>{bbs.b_nickname}</div>
+          <div className={css.list_content}>{bbs.b_content}</div>
+          <div className={css.list_date}>{bbs.b_date}</div>
+        </div>
       </div>
     );
   });
 
-  /*
-  JS 의 join() 함수 : 배열의 요소를 하나의 문자열로 변환하는 함수
-  const arr = [1,2,3,4,5,6]
-  const str = arr.join(" ")
-  str => "1 2 3 4 5 6" 과 같은 문자열을 만들어 낸다
-  */
-
   return (
     <>
-      <div>{bbsItems}</div>
+      <div>{bbsItems.slice(0, visibleItemCount)}</div>
+      {visibleItemCount < bbsList.length && (
+        <button className={css.more} onClick={loadMoreItems}>
+          더볼래?
+        </button>
+      )}
     </>
   );
 };
