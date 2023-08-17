@@ -1,138 +1,24 @@
-# NodeJS 와 React 프로젝트
+# React 와 react-router-dom 6
 
-## NodeJS 설치
+- react 는 기본적으로 SPA(Single Page Application)을 추구하는 도구이다.
+- 하지만 실제 Project 에서 모든 것을 Single Page 로 구현하는 것은 매우 어려운 상황이다.
+- 현재 React 에서 Multipage 를 구현하기 위하여 `NextJS`, `RemixJS` 와 같은 별도의 Framework를 사용하는 프로젝트들이 많이 만들어지고 있다. 하지만 이러한 Framework는 기존의 `create-react-app`으로 만든 프로젝트 구조와는 많이 다른 모습이어서 새로운 학습요건이 발생한다.
+- 그에 반해 react-router-dom 은 `create-react-app` 으로 만든 프로젝트를 크게 벗어나지 않으면서 Multipage Application 을 구현할수 있도록 만든 third part lib 개념이다.
+- react 가 시작할 무렵부터 가잔 많이 사용하는 Navigation 을 구현하는 도구이다.
+- react-router-dom 은 5.x 버전과 6.x 버전의 사용법이 거의 다른 LIB 처럼 구조가 다르다.
+- 6.x 환경에서 일부 5.x 버전의 프로젝트를 구현할수는 있지만, 6.x 버전에서는 Lib 구조가 단순해지고, 5.x 에서 발생한 여러 문제를 해결한 상황이다.
+- 완전 5.x 에서 만들어진 프로젝트는 약 절반정도의 기능이 무력화되어 6.x 에서 온전하게 작동하지 않는다.
+- react, react-router-dom 에서는 6.x 사용할것을 적극 권장한다.
 
-- NodeJS Back-end Server 와 React Front-End 개발을 위한 도구
-- Vanila JS 코드를 실행하고 테스트 할 수 있는 도구
+## react-router-dom 설치방법
 
-## 개발도구 설치
+- 새로운 프로젝트 에서는 : `npm install react-router-dom`으로 설치하고
+- 기존 프로젝트에서는 Migration : `npm install react-router-dom@latest` 로 업그레이드 한다.
+- 단 기존 프로젝트를 6.x로 업그레이드 하면, 프로젝트의 상당부분을 변경해야 한다.
+- 그럼에도 불구하고 6.x 로 업그레이드 하는 것은 매우 생산적이다.
 
-`nodejs.org` 사이트에서 NodeJS LTS 버전 다운로드 후 설치
+# styled-components 적용
 
-- windows 에서는 관리자 권한으로 cmd 창 열고 도구 설치
-
-1. `npm -g install npm` : nodeJS Package Manager 프로그램으로 NodeJS 와 React 프로젝트에서 사용하는 여러가지 부수적도구를 설치하는 도구
-2. `npm -g install nodemon` : Node Server Demon, 아주 작은 Server 실행도구, NodeJS 프로젝트 소스를 변경 후 저장하면 NodeJS 서버를 자동으로 재실행 해주는 도구
-
-## React 폴더에서 vsCode 열기
-
-- `node --version` : 설치된 nodeJS 버전 확인
-
-## NodeJS 서버 만들기
-
-- React 폴더에 프로젝트폴더(Nood-000-Hello)를 생성하기
-- 생성된 폴더에서 터미널 창을 열고 `npm init` 명령 실행,
-  package.json 파일이 생성된다. 이 파일에 NodeJS 프로젝트 설정 항목이 들어있다.
-
-```
-{
-  "name": "000-hello",
-  "version": "1.0.0",
-  "type": "module",
-  "scripts": {
-    "start": "node ./server.js"
-  },
-  "author": "",
-  "license": "ISC",
-  "description": ""
-}
-```
-
-## NodeJS + Express Server 만들기
-
-1. NodeJS 를 이용한 Back-End Project 에서 가장 많이 사용하는 Framework인 Express 를 사용하여 서버 만들기
-2. express-generator 를 이용한 express server 만들기 : `npx express-generator [project]`
-3. express-21c 를 이용한 ES6 Express Server 만들기 : `npx express-21c [project]`
-
-## React Project 만들기
-
-1. react 폴더에서 새로운 폴더 생성 `mkdir react-000-hello`
-2. 프로젝트 시작 : `npm init`
-3. package.json 에 다음 설정
-
-```
-{
-  "name": "react-000-hello",
-  "version": "1.0.0",
-  "description": "",
-  "private": true,
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build"
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": "last 1 chrome version"
-  },
-  "author": "",
-  "license": "ISC"
-}
-
-```
-
-4. dependency 설정
-
-```bash
-npm install react
-npm install react-dom
-npm install react-scripts
-
-```
-
-5. project 구성
-1. `public 폴더 생성`, `index.html` 파일 생성 하고 `div#root` tag 생성
-
-```html
-<body>
-  <div id="root"></div>
-</body>
-```
-
-2. `src` 폴더 생성. `App.js` 파일 생성하고
-
-```js
-const App = () => {
-  return (
-    <div>
-      <button>클릭하세요.</button>
-    </div>
-  );
-};
-export default App;
-```
-
-3. `src/index.js` 파일 생성하고
-
-```js
-import React from "react";
-import ReactDOM from "react-dom/client";
-import App from "./App";
-
-const root = ReactDOM.createRoot(document.querySelector("#root"));
-root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
-);
-```
-
-"@babel/plugin-proposal-private-property-in-object"
-
-파일 복제시
-모듈 삭제후
-npm install 실행
-
-## NodeJS 와 React 연동할때 port 충돌 방지
-
-- NodeJs 는 기본 3000 Port에서 실행
-- React 의 실행 Port 변경
-- Package.json 의 다음 Script 변경
-
-```json
-"start" : "react-scripts start" 를
-"start" : "set PORT=5000 && react-scripts start" 으로
-```
+- react 는 여러 css 를 적용하여 프로젝트를 구현할수 있다. `*.module.css` 를 사용하면 private css 를 구현하여 다른 css 와 충돌없는 캡슐화된 Component 를 구현할 수 있다.
+- react 에서 `*.module.css` 와 더불어 많이 사용하는 또다른 style 지정하기 도구
+- 설치 : `npm install style-component`
