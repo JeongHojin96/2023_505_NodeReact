@@ -1,22 +1,53 @@
-import { Form, useLoaderData, redirect } from "react-router-dom";
+import { Form, useLoaderData, redirect, Navigate } from "react-router-dom";
 import dImage from "../assets/default.png";
 import Button from "../shareComps/Button";
 import css from "./BucketDetail.module.scss";
-import { deleteBucket, getBucket } from "../modules/bucketFech";
+import { deleteBucket, getBucket, saveBucket } from "../modules/bucketFech";
 
 export const detailLoader = async ({ params }) => {
   // const id = params.id
   const { id } = params;
   const bucket = await getBucket(id);
+  if (!bucket) {
+    return redirect("/");
+  }
   return { bucket };
 };
 
+export const completeAction = async ({ params }) => {
+  const bucket = await getBucket(params.id);
+  console.log("Bucket", bucket);
+  const completeBucket = { ...bucket, complete: !bucket.complete };
+  await saveBucket(completeBucket);
+  return redirect(`/content/${params.id}`);
+};
+
 export const deleteAction = async ({ params }) => {
-  if (window.confirm("정말로??")) {
+  if (window.confirm("정말 삭제 할까요?")) {
     await deleteBucket(params.id);
     return redirect("/");
   }
   return redirect(`/content/${params.id}`);
+};
+
+export const favoriteAction = async ({ params, request }) => {
+  const formData = await request.formData();
+  const resultBucket = await getBucket(params.id);
+  const favorite = formData.get("favorite") === "true";
+  const updateBucket = { ...resultBucket, favorite: !favorite };
+  await saveBucket(updateBucket);
+  return "";
+};
+
+const Favorite = ({ bucket }) => {
+  let favorite = bucket.favorite;
+  return (
+    <Form method="POST">
+      <button name="favorite" value={favorite ? "true" : "false"}>
+        {favorite ? "★" : "☆"}
+      </button>
+    </Form>
+  );
 };
 
 const BucketDetail = () => {
@@ -31,16 +62,28 @@ const BucketDetail = () => {
         />
       </div>
       <div className={css.last}>
-        <h1>{bucket.bucket || "None"}</h1>
+        <h1>
+          {bucket.bucket || "None"}
+          <Favorite bucket={bucket} />
+        </h1>
         <div>
           <Form action="edit">
             <Button>수정</Button>
           </Form>
           <Form action="complete" method="POST">
-            <Button bgColor="green">완료</Button>
+            <Button bgColor={bucket.complete ? "orange" : "green"}>
+              {bucket.complete ? "완료취소" : "완료"}
+            </Button>
           </Form>
           <Form action="delete" method="POST">
-            <Button bgColor="red">삭제</Button>
+            <Button
+              className={css.delete}
+              bgColor="red"
+              // type={bucket.complete ? "button" : "submit"}
+              disabled={bucket.complete ? "disabled" : ""}
+            >
+              삭제
+            </Button>
           </Form>
         </div>
       </div>
