@@ -1,0 +1,60 @@
+.App-header {
+  margin: 10px auto;
+  text-align: center;
+  min-height: 10vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: black;
+  border: 1px solid blue;
+}
+
+.App-body {
+  padding: 10px;
+  margin: 10px auto;
+  border: 1px solid skyblue;
+}
+
+.App-body div {
+  margin: 5px auto;
+}
+
+.App-body input {
+  margin-left: 20px;
+}
+
+.App-ID input {
+  margin-left: 37px;
+}
+
+.App-PW input {
+  margin-left: 28px;
+}
+
+.App-email input {
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+.App-body textarea {
+  margin-left: 21px;
+}
+
+button {
+  margin: 5px;
+}
+
+.App-footer {
+  margin: 10px auto;
+  text-align: center;
+  min-height: 10vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: black;
+  border: 1px solid blue;
+}
